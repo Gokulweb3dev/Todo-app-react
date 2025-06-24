@@ -5,6 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 
@@ -32,6 +35,7 @@ const Todo = () => {
       txt: value,
       iscomplete: false,
     };
+    toast(`new task added ${value}`);
     setinc(list.filter(item => !item.iscomplete).length);
     setinc(pre=>pre+1);
 
@@ -41,7 +45,10 @@ const Todo = () => {
     input.current.value = "";
   };
   const deltodo = (id) => {
+    const del=list.filter((item) => item.id == id)
     setList(list.filter((item) => item.id !== id));
+    console.log(del[0].txt);
+    toast.error(` task deleted << ${del[0].txt}`);
   };
   const toggle = (id) => {
 
@@ -122,6 +129,7 @@ const Todo = () => {
           />
         );
       })}
+      <ToastContainer/>
     </div>
   );
 };
