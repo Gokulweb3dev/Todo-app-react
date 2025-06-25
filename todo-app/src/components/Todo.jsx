@@ -30,12 +30,13 @@ const Todo = () => {
   }, [list]);
 
   const add = () => {
+     const value = input.current.value.trim();
     if (!value) {
   toast.error("Task cannot be empty!");
   return;
 }
 
-    const value = input.current.value.trim();
+   
     const newitem = {
       id: Date.now(),
       txt: value,
