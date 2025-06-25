@@ -51,6 +51,7 @@ const Todo = () => {
     input.current.value = "";
   };
   const deltodo = (id) => {
+    const del=list.filter((item) => item.id === id)
     setList(list.filter((item) => item.id !== id));
     toast.error(` task deleted << ${del[0].txt}`);
   };
