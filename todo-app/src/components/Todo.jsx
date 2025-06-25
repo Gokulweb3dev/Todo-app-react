@@ -19,7 +19,8 @@ const Todo = () => {
   const [list, setList] = useState(
     localStorage.getItem("save") ? JSON.parse(localStorage.getItem("save")) : []
   );
-  const [inc,setinc]=useState(0);
+  const incompleteCount = list.filter(item => !item.iscomplete).length;
+
 
 
 
@@ -29,6 +30,11 @@ const Todo = () => {
   }, [list]);
 
   const add = () => {
+    if (!value) {
+  toast.error("Task cannot be empty!");
+  return;
+}
+
     const value = input.current.value.trim();
     const newitem = {
       id: Date.now(),
@@ -36,8 +42,7 @@ const Todo = () => {
       iscomplete: false,
     };
     toast(`new task added ${value}`);
-    setinc(list.filter(item => !item.iscomplete).length);
-    setinc(pre=>pre+1);
+
 
 
     setList((pre) => [...pre, newitem]);
@@ -45,9 +50,7 @@ const Todo = () => {
     input.current.value = "";
   };
   const deltodo = (id) => {
-    const del=list.filter((item) => item.id == id)
     setList(list.filter((item) => item.id !== id));
-    console.log(del[0].txt);
     toast.error(` task deleted << ${del[0].txt}`);
   };
   const toggle = (id) => {
@@ -61,8 +64,6 @@ const Todo = () => {
         }
       })
     );
-        setinc(list.filter(item => !item.iscomplete).length);
-        setinc(pre=>pre+1);
   };
 
 
@@ -86,12 +87,12 @@ const Todo = () => {
      
         <SwiperSlide>
           <div className="w-full max-w-64 h-full text-2xl bg-green-300 flex items-center justify-center">
-            {`Task completed = ${list.length-inc}`}
+            {`Task completed = ${list.length-incompleteCount}`}
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="w-full max-w-64 h-full text-2xl bg-red-700 text-white flex items-center justify-center">
-            {`Task uncompleted = ${inc}`}
+            {`Task uncompleted = ${incompleteCount}`}
           </div>
         </SwiperSlide>
       </Swiper>
